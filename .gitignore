@@ -1,0 +1,5 @@
+*.pyc
+test-conf
+test-logs
+
+*.swp
