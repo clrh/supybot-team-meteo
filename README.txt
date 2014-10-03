@@ -16,3 +16,7 @@ Would like:
 2 à tester
 0 à rt
 0 à documenter
+
+
+Memo for testing:
+$ supybot-test --plugins-dir=..
