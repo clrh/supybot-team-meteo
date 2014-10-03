@@ -17,7 +17,6 @@ class TeamMeteo(callbacks.Plugin):
     This should describe *how* to use this plugin."""
     pass
 
-
 Class = TeamMeteo
 
 
