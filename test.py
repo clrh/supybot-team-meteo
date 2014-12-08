@@ -13,5 +13,8 @@ class TeamMeteoTestCase(PluginTestCase):
     def testTeamMeteo(self):
         self.assertNotError('bmeteo')
         self.assertResponse('bmeteo','coucou')
+    
+    def testGetMetrics(self):
+        self.assertResponse('getnbhl','46')
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
