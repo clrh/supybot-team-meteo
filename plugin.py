@@ -14,35 +14,27 @@ class TeamMeteo(callbacks.Plugin):
     This should describe *how* to use this plugin."""
     pass
 
-    metric_file = 'mock2.csv'
-    metrics = {}
-
     def __init__(self, irc):
         self.__parent = super(TeamMeteo, self)
         self.__parent.__init__(irc)
-
-    def bmeteo(self,irc,msg,args):
-        """takes no arguments
-
-        Displays some data
-        """
-        irc.reply(str('coucou'))
+        self.metrics = {}
 
     def _getnewfile(self):
         """download the fresh csv file"""
         url = 'https://docs.google.com/spreadsheets/d/1B_0sZ74_jrFZo1GbyGmUQe2CJ5gklevunvt5EFxUA7g/export?format=csv&gid=1272107489&single=true'
         file = urllib.URLopener()
-        self.metric_file = "metrics.csv"
-        file.retrieve(url,self.metric_file)
+        file.retrieve(url,"metrics.ini")
 
     def _loadmetrics(self):
         """load metrics from the csv file in memory"""
-        with open (self.metric_file, 'r') as csvfile:
+        with open (self.registryValue('metricFile'), 'r') as csvfile:
             reader = csv.reader(csvfile, delimiter=',')
             for row in reader:
                 self.metrics[row[0]] = row[1]
+        print "debugfile:" + self.registryValue('metricFile')
 
     def hlstat(self,irc,msg,args):
+        self._getnewfile()
         self._loadmetrics()
         s = self.metrics
         statustxt = s['demandes HL'] + " en HL: "
@@ -56,6 +48,7 @@ class TeamMeteo(callbacks.Plugin):
 
     def devstat(self,irc,msg,args):
         """give me the status of developpment sprint"""
+        self._getnewfile()
         self._loadmetrics()
         s = self.metrics
         statustxt = s['points engagés'] + " points engagés dont " \
@@ -66,6 +59,7 @@ class TeamMeteo(callbacks.Plugin):
 
     def wtdn(self,irc,msg,args):
         """what to do now ?"""
+        self._getnewfile()
         self._loadmetrics()
         s = self.metrics
         statustxt = ''
@@ -78,11 +72,6 @@ class TeamMeteo(callbacks.Plugin):
         if s['à documenter'] != '':
             statustxt += s['à documenter'] + " à documenter" 
         irc.reply(str(statustxt))
-
-    def testdata(self,irc,msg,args):
-        self._getnewfile()
-        self._loadmetrics()
-        irc.reply(str('test'))
 
 Class = TeamMeteo
 

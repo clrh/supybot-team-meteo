@@ -18,9 +18,7 @@ def configure(advanced):
 
 
 TeamMeteo = conf.registerPlugin('TeamMeteo')
-# This is where your configuration variables (if any) should go.  For example:
-# conf.registerGlobalValue(TeamMeteo, 'someConfigVariableName',
-#     registry.Boolean(False, """Help for someConfigVariableName."""))
-
+conf.registerGlobalValue(TeamMeteo,'metricFile',
+        registry.String('metrics.ini',"""Metrics loaded"""))
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
