@@ -1,22 +1,29 @@
 Displays data from a csv file to the team about its developments metrics.
 
-$ more 2014-10-03-174120_export_bokehdata.csv
-date,heure,points engagés,points bonus,stories terminées,points terminés,demandes HL,48h,urgent,haut,à intégrer,à tester,à rt,à documenter
-10/3/2014,17:21:10,15,2,2,3,22,,6,4,1,1,,
+$ cat metrics.ini
+date,12/9/2014
+heure,16:59:1
+points engagés,14
+points bonus,0
+stories terminées,2
+points terminés,3
+demandes HL,45
+48h,
+urgent,3
+haut,7
+à intégrer,3
+à tester,1
+à rt,2
+à documenter,1
 
-Would like:
+> hlstat
+45 en HL: 3 urgent(s), 7 haut(s)
 
-!bmeteo
-15 points engagés dont 2 points bonus
-3 points terminés de 2 stories
-22 en HL: 0 48h 5 Urgent M4 Haut
+> devstat
+14 points engagés dont 0 points bonus, 3 points terminés de 2 stories
 
-!bprio
-1 à intégrer
-2 à tester
-0 à rt
-0 à documenter
-
+> wtdn
+3 à intégrer, 1 à tester, 2 à rt, 1 à documenter
 
 Memo for testing:
 $ supybot-test --plugins-dir=..
