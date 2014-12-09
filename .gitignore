@@ -1,5 +1,7 @@
 *.pyc
 test-conf
 test-logs
+*.swn
+*.swo
 
 *.swp
