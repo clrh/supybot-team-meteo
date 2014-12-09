@@ -55,6 +55,7 @@ class TeamMeteo(callbacks.Plugin):
         irc.reply(str(statustxt))
 
     def devstat(self,irc,msg,args):
+        """give me the status of developpment sprint"""
         self._loadmetrics()
         s = self.metrics
         statustxt = s['points engagés'] + " points engagés dont " \
@@ -64,7 +65,7 @@ class TeamMeteo(callbacks.Plugin):
         irc.reply(str(statustxt))
 
     def wtdn(self,irc,msg,args):
-        """what to do know ?"""
+        """what to do now ?"""
         self._loadmetrics()
         s = self.metrics
         statustxt = ''
