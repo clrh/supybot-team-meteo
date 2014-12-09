@@ -1,9 +1,5 @@
-###
-# Copyright (c) 2014, clrh
-# All rights reserved.
-#
-#
-###
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import supybot.utils as utils
 from supybot.commands import *
@@ -39,7 +35,14 @@ class TeamMeteo(callbacks.Plugin):
         self.metric_file = "metrics.csv"
         file.retrieve(url,self.metric_file)
 
-    def hlstatus(self,irc,msg,args):
+    def _loadmetrics(self):
+        """load metrics from the csv file in memory"""
+        with open (self.metric_file, 'r') as csvfile:
+            reader = csv.reader(csvfile, delimiter=',')
+            for row in reader:
+                self.metrics[row[0]] = row[1]
+
+    def hlstat(self,irc,msg,args):
         self._loadmetrics()
         s = self.metrics
         statustxt = s['demandes HL'] + " en HL: "
@@ -51,12 +54,29 @@ class TeamMeteo(callbacks.Plugin):
             statustxt += s['haut'] + " haut(s)" 
         irc.reply(str(statustxt))
 
-    def _loadmetrics(self):
-        """load metrics from the csv file in memory"""
-        with open (self.metric_file, 'r') as csvfile:
-            reader = csv.reader(csvfile, delimiter=',')
-            for row in reader:
-                self.metrics[row[0]] = row[1]
+    def devstat(self,irc,msg,args):
+        self._loadmetrics()
+        s = self.metrics
+        statustxt = s['points engagés'] + " points engagés dont " \
+                + s['points bonus'] + " points bonus, " \
+                + s['points terminés'] + " points terminés de " \
+                + s['stories terminées'] + " stories"
+        irc.reply(str(statustxt))
+
+    def wtdn(self,irc,msg,args):
+        """what to do know ?"""
+        self._loadmetrics()
+        s = self.metrics
+        statustxt = ''
+        if s['à intégrer'] != '':
+            statustxt += s['à intégrer'] + " à intégrer, "
+        if s['à tester'] != '':
+            statustxt += s['à tester'] + " à tester, "
+        if s['à rt'] != '':
+            statustxt += s['à rt'] + " à rt, " 
+        if s['à documenter'] != '':
+            statustxt += s['à documenter'] + " à documenter" 
+        irc.reply(str(statustxt))
 
     def testdata(self,irc,msg,args):
         self._getnewfile()
