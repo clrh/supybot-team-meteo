@@ -73,6 +73,13 @@ class TeamMeteo(callbacks.Plugin):
             statustxt += s['à documenter'] + " à documenter" 
         irc.reply(str(statustxt))
 
+    def hlstat(self,irc,msg,args):
+        self._getnewfile()
+        self._loadmetrics()
+        s = self.metrics
+        statustxt = s['heure'] + " " + s['date']
+        irc.reply(str(statustxt))
+
 Class = TeamMeteo
 
 

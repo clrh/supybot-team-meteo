@@ -2,6 +2,7 @@
 test-conf
 test-logs
 *.swn
+*.swp
 *.swo
 
 *.swp

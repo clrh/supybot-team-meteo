@@ -19,6 +19,8 @@ class TeamMeteoTestCase(PluginTestCase):
     def testGetMetrics(self):
         self.assertResponse('hlstat','45 en HL: 3 urgent(s), 7 haut(s)')
         self.assertResponse('devstat','14 points engagés dont 0 points bonus, 3 points terminés de 2 stories')
+        self.assertResponse('lastupdated','16:59:1 12/9/2014')
+
 
     def testWhatToDoNow(self):
         self.assertResponse('wtdn','3 à intégrer, 1 à tester, 2 à rt, 1 à documenter')
