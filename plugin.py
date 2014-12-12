@@ -8,11 +8,14 @@ import supybot.ircutils as ircutils
 import supybot.callbacks as callbacks
 import csv
 import urllib
+import supybot.conf as conf
 
 class TeamMeteo(callbacks.Plugin):
     """Add the help for "@plugin help TeamMeteo" here
     This should describe *how* to use this plugin."""
     pass
+
+    path = conf.supybot.directories.data
 
     def __init__(self, irc):
         self.__parent = super(TeamMeteo, self)
@@ -23,15 +26,14 @@ class TeamMeteo(callbacks.Plugin):
         """download the fresh csv file"""
         url = 'https://docs.google.com/spreadsheets/d/1B_0sZ74_jrFZo1GbyGmUQe2CJ5gklevunvt5EFxUA7g/export?format=csv&gid=1272107489&single=true'
         file = urllib.URLopener()
-        file.retrieve(url,"metrics.ini")
+        file.retrieve(url, self.path.dirize(self.registryValue('metricFile')))
 
     def _loadmetrics(self):
         """load metrics from the csv file in memory"""
-        with open (self.registryValue('metricFile'), 'r') as csvfile:
+        with open (self.path.dirize(self.registryValue('metricFile')), 'r') as csvfile:
             reader = csv.reader(csvfile, delimiter=',')
             for row in reader:
                 self.metrics[row[0]] = row[1]
-        print "debugfile:" + self.registryValue('metricFile')
 
     def hlstat(self,irc,msg,args):
         self._getnewfile()
