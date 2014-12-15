@@ -17,7 +17,7 @@ class TeamMeteoTestCase(PluginTestCase):
         conf.supybot.plugins.TeamMeteo.metricFile.setValue("mock.csv")
 
     def testGetMetrics(self):
-        self.assertResponse('hlstat','45 en HL: 3 urgent(s), 7 haut(s)')
+        self.assertResponse('hlstat','45 affectés au dev en HL, 3 urgent(s), 7 haut(s)')
         self.assertResponse('devstat','14 points engagés dont 0 points bonus, 3 points terminés de 2 stories')
         self.assertResponse('lastupdated','16:59:1 12/9/2014')
 

@@ -34,10 +34,11 @@ class TeamMeteo(callbacks.Plugin):
         print "debugfile:" + self.registryValue('metricFile')
 
     def hlstat(self,irc,msg,args):
+        """give me the status of hotline developpment"""
         self._getnewfile()
         self._loadmetrics()
         s = self.metrics
-        statustxt = s['demandes HL'] + " en HL: "
+        statustxt = s['demandes HL'] + " affectés au dev en HL, "
         if s['48h'] != '':
             statustxt += s['48h'] + " 48h, "
         if s['urgent'] != '':
